@@ -6,6 +6,9 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
+<img alt="Python" src="https://img.shields.io/badge/python-%2314354C.svg?style=appveyor&logo=python&logoColor=white"/> 
+<img alt="Blender" src="https://img.shields.io/badge/blender-%23F5792A.svg?style=appveyor&logo=blender&logoColor=white"/>
+
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -148,15 +151,15 @@ Project Link: [https://github.com/AcylSilane/hydrogen_blender](https://github.co
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/AcylSilane/hydrogen_blender.svg?style=for-the-badge
+[contributors-shield]: https://img.shields.io/github/contributors/AcylSilane/hydrogen_blender.svg?style=appveyor
 [contributors-url]: https://github.com/AcylSilane/hydrogen_blender/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/AcylSilane/hydrogen_blender.svg?style=for-the-badge
+[forks-shield]: https://img.shields.io/github/forks/AcylSilane/hydrogen_blender.svg?style=appveyor
 [forks-url]: https://github.com/AcylSilane/hydrogen_blender/network/members
-[stars-shield]: https://img.shields.io/github/stars/AcylSilane/hydrogen_blender.svg?style=for-the-badge
+[stars-shield]: https://img.shields.io/github/stars/AcylSilane/hydrogen_blender.svg?style=appveyor
 [stars-url]: https://github.com/AcylSilane/hydrogen_blender/stargazers
-[issues-shield]: https://img.shields.io/github/issues/AcylSilane/hydrogen_blender.svg?style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues/AcylSilane/hydrogen_blender.svg?style=appveyor
 [issues-url]: https://github.com/AcylSilane/hydrogen_blender/issues
-[license-shield]: https://img.shields.io/github/license/AcylSilane/hydrogen_blender.svg?style=for-the-badge
+[license-shield]: https://img.shields.io/github/license/AcylSilane/hydrogen_blender.svg?style=appveyor
 [license-url]: https://github.com/AcylSilane/hydrogen_blender/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=appveyor&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/DeanJamesR
