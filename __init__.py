@@ -19,7 +19,8 @@ bl_info = {
     "version" : (0, 1, 0),
     "location" : "File -> Import -> Chemical",
     "warning" : "",
-    "category" : "Generic"
+    "tracker_url" : "https://github.com/AcylSilane/hydrogen_blender/issues",
+    "category" : "Import-Export"
 }
 
 from . import auto_load
