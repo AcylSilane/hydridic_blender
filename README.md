@@ -6,8 +6,7 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
-<img alt="Python" src="https://img.shields.io/badge/python-%2314354C.svg?style=appveyor&logo=python&logoColor=white"/> 
-<img alt="Blender" src="https://img.shields.io/badge/blender-%23F5792A.svg?style=appveyor&logo=blender&logoColor=white"/>
+<img alt="Python" src="https://img.shields.io/badge/python-%2314354C.svg?style=appveyor&logo=python&logoColor=white"/>  <img alt="Blender" src="https://img.shields.io/badge/blender-%23F5792A.svg?style=appveyor&logo=blender&logoColor=white"/>
 
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
