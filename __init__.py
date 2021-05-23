@@ -1,7 +1,11 @@
 import bpy
-from . import ui
 
-from . import auto_load
+import os, sys
+
+sys.path.append(os.path.dirname(__file__))
+
+import addon_prefs
+from addon_prefs import HYDRIDIC_preferences, HYDRIDIC_install_dependencies
 
 bl_info = {
     "name": "Hydridic Blender",
@@ -15,13 +19,19 @@ bl_info = {
     "category": "Import-Export",
 }
 
-def register():
-    for item in (ui.settings.HYDRIDIC_install_dependencies,
-                 ui.settings.HYDRIDIC_preferences):
-        bpy.utils.register_class(item)
+# TODO: It is utterly ridiculous that exec is the only way to get Blender to actually register the contents of this module...
+for module in (addon_prefs,):
+    with open(module.__file__, "r") as inp:
+        contents = inp.read()
+        exec(contents)
 
+
+classes = (HYDRIDIC_install_dependencies, HYDRIDIC_preferences)
+
+def register():
+    for cls in classes:
+      bpy.utils.register_class(cls)
 
 def unregister():
-    for item in (ui.settings.HYDRIDIC_install_dependencies,
-                 ui.settings.HYDRIDIC_preferences):
-        bpy.utils.unregister_class(item)
+    for cls in classes:
+      bpy.utils.unregister_class(cls)

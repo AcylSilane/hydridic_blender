@@ -1,13 +1,20 @@
 """
-Settings UI for 
+File containing classes related to addon preferences
 """
 import importlib, sys, subprocess
 
+
 import bpy
+
 
 class HYDRIDIC_install_dependencies(bpy.types.Operator):
     """
-    Handles installing Python packages necessary for this to run.
+    Handles installing Python packages necessary for the addon to run.
+
+    It does this by checking if all of the packages specified in the "dependencies"
+    class attribute are installed. If any are missing, pip tries to install them.
+
+    The user accesses this operator via the addon preferences menu.
     """
 
     dependencies = ("ase",)
@@ -38,7 +45,7 @@ class HYDRIDIC_install_dependencies(bpy.types.Operator):
 
 class HYDRIDIC_preferences(bpy.types.AddonPreferences):
     """
-    Preferences pane, giving the user a button to install the dependencies.
+    Preferences menu, giving the user a button to install the dependencies.
     """
 
     bl_idname = __name__
@@ -46,3 +53,11 @@ class HYDRIDIC_preferences(bpy.types.AddonPreferences):
     def draw(self, context: bpy.types.Context) -> None:
         layout = self.layout
         layout.operator(HYDRIDIC_install_dependencies.bl_idname, icon="CONSOLE")
+
+
+classes = (HYDRIDIC_preferences,)
+
+register, unregister = bpy.utils.register_classes_factory(classes)
+
+if __name__ == "__main__":
+    register()
