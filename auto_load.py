@@ -1,3 +1,8 @@
+"""
+This file is from https://github.com/JacquesLucke/blender_vscode, and was created upon project initialization.
+
+It searches through the project to find classes and automatically register them.
+"""
 import os
 import bpy
 import sys
