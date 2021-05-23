@@ -146,6 +146,8 @@ Project Link: [https://github.com/AcylSilane/hydridic_blender](https://github.co
 ## Acknowledgements
 
 * [The Best README Template](https://github.com/othneildrew/Best-README-Template)
+* The [Blender Development](https://marketplace.visualstudio.com/items?itemName=JacquesLucke.blender-development) VSCode extension by Jacques Lucke
+* This [excellent blog post](https://b3d.interplanety.org/en/using-microsoft-visual-studio-code-as-external-ide-for-writing-blender-scripts-add-ons/) by Nikita, which greatly helped in getting autocomplete/linting working for Blender's Python API
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
