@@ -1,15 +1,8 @@
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful, but
-# WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTIBILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program. If not, see <http://www.gnu.org/licenses/>.
+import bpy
+from typing import Set
+import importlib, sys, subprocess
+
+from . import auto_load
 
 bl_info = {
     "name": "Hydridic Blender",
@@ -23,13 +16,7 @@ bl_info = {
     "category": "Import-Export",
 }
 
-import bpy
-from typing import Set
-from . import auto_load
-
 auto_load.init()
-
-dependencies = ("ASE",)
 
 
 class HYDRIDIC_install_dependencies(bpy.types.Operator):
@@ -37,8 +24,10 @@ class HYDRIDIC_install_dependencies(bpy.types.Operator):
     Handles installing Python packages necessary for this to run.
     """
 
+    dependencies = ("ase",)
+
     bl_idname = "hydridic.install_dependencies"
-    bl_label = "Install Dependencies"
+    bl_label = "Install Dependencies (May take several minutes)"
     bl_description = (
         "Downloads and installs packages required for this add-on to work."
         " An internet connection is required, and Blender may need to run"
@@ -46,16 +35,18 @@ class HYDRIDIC_install_dependencies(bpy.types.Operator):
     )
     bl_options = {"REGISTER", "INTERNAL"}
 
-    @staticmethod
-    def dependencies_installed() -> bool:
-        return False
+    @classmethod
+    def dependencies_installed(cls) -> bool:
+        return all(
+            importlib.util.find_spec(dependency) for dependency in cls.dependencies
+        )
 
     @classmethod
     def poll(self, context: bpy.types.Context) -> bool:
         return not self.dependencies_installed()
 
     def execute(self, context: bpy.types.Context) -> Set:
-        print("Button Pressed")
+        subprocess.call([sys.executable, "-m", "pip", "install", *self.dependencies])
         return {"FINISHED"}
 
 
