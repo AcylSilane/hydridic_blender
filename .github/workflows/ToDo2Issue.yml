@@ -1,19 +1,27 @@
 name: Create Issues from ToDo
-
 on:
   push:
-    branches:
-      - master
-
+    branches: [ master, dev ]
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v1
-      - name: todo-actions
-        uses: dtinth/todo-actions@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TODO_ACTIONS_MONGO_URL: ${{ secrets.TODO_ACTIONS_MONGO_URL }}
+      - uses: actions/checkout@v2
+      - name: TODO to Issue
+        # You may pin to the exact commit or the version.
+        # uses: alstr/todo-to-issue-action@87d6da6e337091df4fc001e25a270bab4f5ec1ca
+        uses: alstr/todo-to-issue-action@v3.0.5
+        with:
+          # The path to the repository where the action will be used, e.g. 'alstr/my-repo' (automatically set)
+          REPO: ${{ github.repository }}
+          # The SHA of the last pushed commit (automatically set)
+          BEFORE: ${{ github.event.before }}
+          # The SHA of the latest commit (automatically set)
+          SHA: ${{ github.sha }}
+          # Token used by ToDo to Issue
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # The GitHub access token to allow us to retrieve, create and update issues (automatically set)
+          CLOSE_ISSUES: true
+          # For multiline TODOs, format each line as a new paragraph when creating the issue
+          AUTO_P: true
