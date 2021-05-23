@@ -1,6 +1,9 @@
 import bpy
 
-import os, sys
+import os
+import sys
+import subprocess
+import importlib
 
 sys.path.append(os.path.dirname(__file__))
 
@@ -16,35 +19,59 @@ bl_info = {
     "category": "Import-Export",
 }
 
-classes = []
-
 # =================
 # Addon Preferences
 
-# The below code is gross. Because it uses exec.
-# Why am I doing this? Because the blender addon API appears to be broken for the addon prefs screen.
-# This is the only way I could get the "install dependencies" button to work.
-# Specifically, none of the following result in the presence of the "Install Dependencies" button:
-#     - The "register_module" helper functions were removed after 2.80
-#     - Creating register/unregister functions via the bpy.utils.register_class_factory() method
-#         at the module level, and running them inside of __init__'s register() function
-#     - Directly importing the classes inside addon_prefs, and registering them inside __init__.py.
-#
-# For some unknown reason, the only way I can get the button to show up, is to run exec on thing I
-# want to import. One thing I am not going to do is shove all of these class definitions into __init__
-# to create a file that's several hundred lines long.
-#
-# TODO: There has to be a better way to register these classes than running import+exec
 
-import addon_prefs  # Needed to get the module's __file__
-from addon_prefs import (
-    HYDRIDIC_OT_install_dependencies,
-    HYDRIDIC_UL_preferences,
-)  # Needed for linting
+class HYDRIDIC_OT_install_dependencies(bpy.types.Operator):
+    """
+    Handles installing Python packages necessary for the addon to run.
 
-with open(addon_prefs.__file__, "r") as inp:
-    exec(inp.read())
-classes += (HYDRIDIC_UL_preferences, HYDRIDIC_OT_install_dependencies)
+    It does this by checking if all of the packages specified in the "dependencies"
+    class attribute are installed. If any are missing, pip tries to install them.
+
+    The user accesses this operator via the addon preferences menu.
+    """
+
+    dependencies = ("ase",)
+
+    bl_idname = "hydridic.install_dependencies"
+    bl_label = "Install Dependencies (May take several minutes)"
+    bl_description = (
+        "Downloads and installs packages required for this add-on to work."
+        " An internet connection is required, and Blender may need to run"
+        " with elevated permissions."
+    )
+    bl_options = {"REGISTER", "INTERNAL"}
+
+    @classmethod
+    def dependencies_installed(cls) -> bool:
+        return all(
+            importlib.util.find_spec(dependency) for dependency in cls.dependencies
+        )
+
+    @classmethod
+    def poll(self, context: bpy.types.Context) -> bool:
+        return not self.dependencies_installed()
+
+    def execute(self, context: bpy.types.Context):
+        subprocess.call([sys.executable, "-m", "pip", "install", *self.dependencies])
+        return {"FINISHED"}
+
+
+class HYDRIDIC_UL_preferences(bpy.types.AddonPreferences):
+    """
+    Preferences menu, giving the user a button to install the dependencies.
+    """
+
+    bl_idname = __name__
+
+    def draw(self, context: bpy.types.Context) -> None:
+        layout = self.layout
+        layout.operator(HYDRIDIC_OT_install_dependencies.bl_idname, icon="CONSOLE")
+
+
+classes = (HYDRIDIC_OT_install_dependencies, HYDRIDIC_UL_preferences)
 
 
 def register():
