@@ -1,8 +1,14 @@
+"""
+Blender operator classes are in this file
+"""
 import sys
 import subprocess
 import importlib
 
 import bpy, bpy_extras
+
+import utils
+
 
 DEPENDENCIES = ("ase",)
 
