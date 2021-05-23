@@ -1,15 +1,8 @@
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful, but
-# WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTIBILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program. If not, see <http://www.gnu.org/licenses/>.
+import bpy
+
+import os, sys
+
+sys.path.append(os.path.dirname(__file__))
 
 bl_info = {
     "name": "Hydridic Blender",
@@ -23,63 +16,42 @@ bl_info = {
     "category": "Import-Export",
 }
 
-import bpy
-from typing import Set
-from . import auto_load
+classes = []
 
-auto_load.init()
+# =================
+# Addon Preferences
 
-dependencies = ("ASE",)
+# The below code is gross. Because it uses exec.
+# Why am I doing this? Because the blender addon API appears to be broken for the addon prefs screen.
+# This is the only way I could get the "install dependencies" button to work.
+# Specifically, none of the following result in the presence of the "Install Dependencies" button:
+#     - The "register_module" helper functions were removed after 2.80
+#     - Creating register/unregister functions via the bpy.utils.register_class_factory() method
+#         at the module level, and running them inside of __init__'s register() function
+#     - Directly importing the classes inside addon_prefs, and registering them inside __init__.py.
+#
+# For some unknown reason, the only way I can get the button to show up, is to run exec on thing I
+# want to import. One thing I am not going to do is shove all of these class definitions into __init__
+# to create a file that's several hundred lines long.
+#
+# TODO: There has to be a better way to register these classes than running import+exec
 
+import addon_prefs  # Needed to get the module's __file__
+from addon_prefs import (
+    HYDRIDIC_OT_install_dependencies,
+    HYDRIDIC_UL_preferences,
+)  # Needed for linting
 
-class HYDRIDIC_install_dependencies(bpy.types.Operator):
-    """
-    Handles installing Python packages necessary for this to run.
-    """
-
-    bl_idname = "hydridic.install_dependencies"
-    bl_label = "Install Dependencies"
-    bl_description = (
-        "Downloads and installs packages required for this add-on to work."
-        " An internet connection is required, and Blender may need to run"
-        " with elevated permissions."
-    )
-    bl_options = {"REGISTER", "INTERNAL"}
-
-    @staticmethod
-    def dependencies_installed() -> bool:
-        return False
-
-    @classmethod
-    def poll(self, context: bpy.types.Context) -> bool:
-        return not self.dependencies_installed()
-
-    def execute(self, context: bpy.types.Context) -> Set:
-        print("Button Pressed")
-        return {"FINISHED"}
-
-
-class HYDRIDIC_preferences(bpy.types.AddonPreferences):
-    """
-    Preferences pane, giving the user a button to install the dependencies.
-    """
-
-    bl_idname = __name__
-
-    def draw(self, context: bpy.types.Context) -> None:
-        layout = self.layout
-        layout.operator(HYDRIDIC_install_dependencies.bl_idname, icon="CONSOLE")
+with open(addon_prefs.__file__, "r") as inp:
+    exec(inp.read())
+classes += (HYDRIDIC_UL_preferences, HYDRIDIC_OT_install_dependencies)
 
 
 def register():
-    for item in (HYDRIDIC_install_dependencies, HYDRIDIC_preferences):
-        bpy.utils.register_class(item)
-
-    auto_load.register()
+    for cls in classes:
+        bpy.utils.register_class(cls)
 
 
 def unregister():
-    for item in (HYDRIDIC_install_dependencies, HYDRIDIC_preferences):
-        bpy.utils.unregister_class(item)
-
-    auto_load.unregister()
+    for cls in classes:
+        bpy.utils.unregister_class(cls)
