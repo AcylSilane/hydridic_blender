@@ -12,14 +12,14 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 bl_info = {
-    "name": "Hydrogen-Blender",
+    "name": "Hydridic Blender",
     "author": "James Dean",
     "description": "Import and manipulate molecules, crystals, and other chemical species in an efficient manner",
     "blender": (2, 80, 0),
     "version": (0, 1, 0),
     "location": "File -> Import -> Chemical",
     "warning": "",
-    "tracker_url": "https://github.com/AcylSilane/hydrogen_blender/issues",
+    "tracker_url": "https://github.com/AcylSilane/hydridic_blender/issues",
     "category": "Import-Export",
 }
 
@@ -32,12 +32,12 @@ auto_load.init()
 dependencies = ("ASE",)
 
 
-class HYDROGEN_install_dependencies(bpy.types.Operator):
+class HYDRIDIC_install_dependencies(bpy.types.Operator):
     """
     Handles installing Python packages necessary for this to run.
     """
 
-    bl_idname = "hydrogen.install_dependencies"
+    bl_idname = "hydridic.install_dependencies"
     bl_label = "Install Dependencies"
     bl_description = (
         "Downloads and installs packages required for this add-on to work."
@@ -59,7 +59,7 @@ class HYDROGEN_install_dependencies(bpy.types.Operator):
         return {"FINISHED"}
 
 
-class HYDROGEN_preferences(bpy.types.AddonPreferences):
+class HYDRIDIC_preferences(bpy.types.AddonPreferences):
     """
     Preferences pane, giving the user a button to install the dependencies.
     """
@@ -68,18 +68,18 @@ class HYDROGEN_preferences(bpy.types.AddonPreferences):
 
     def draw(self, context: bpy.types.Context) -> None:
         layout = self.layout
-        layout.operator(HYDROGEN_install_dependencies.bl_idname, icon="CONSOLE")
+        layout.operator(HYDRIDIC_install_dependencies.bl_idname, icon="CONSOLE")
 
 
 def register():
-    for item in (HYDROGEN_install_dependencies, HYDROGEN_preferences):
+    for item in (HYDRIDIC_install_dependencies, HYDRIDIC_preferences):
         bpy.utils.register_class(item)
 
     auto_load.register()
 
 
 def unregister():
-    for item in (HYDROGEN_install_dependencies, HYDROGEN_preferences):
+    for item in (HYDRIDIC_install_dependencies, HYDRIDIC_preferences):
         bpy.utils.unregister_class(item)
 
     auto_load.unregister()
