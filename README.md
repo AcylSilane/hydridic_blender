@@ -20,23 +20,23 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/AcylSilane/hydrogen_blender">
+  <a href="https://github.com/AcylSilane/hydridic_blender">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">Hydrogen Blender</h3>
+  <h3 align="center">Hydridic Blender</h3>
 
   <p align="center">
     This addon helps import chemical species to blender. 
     <br />
-    <a href="https://github.com/AcylSilane/hydrogen_blender"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/AcylSilane/hydridic_blender"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/AcylSilane/hydrogen_blender">View Demo</a>
+    <a href="https://github.com/AcylSilane/hydridic_blender">View Demo</a>
     ·
-    <a href="https://github.com/AcylSilane/hydrogen_blender/issues">Report Bug</a>
+    <a href="https://github.com/AcylSilane/hydridic_blender/issues">Report Bug</a>
     ·
-    <a href="https://github.com/AcylSilane/hydrogen_blender/issues">Request Feature</a>
+    <a href="https://github.com/AcylSilane/hydridic_blender/issues">Request Feature</a>
   </p>
 </p>
 
@@ -84,7 +84,7 @@
 <!-- GETTING STARTED -->
 ## Getting Started
 
-To get started with Hydrogen Blender, follow the guide below.
+To get started with Hydridic Blender, follow the guide below.
 
 ### Prerequisites
 
@@ -109,7 +109,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-See the [open issues](https://github.com/AcylSilane/hydrogen_blender/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/AcylSilane/hydridic_blender/issues) for a list of proposed features (and known issues).
 
 
 
@@ -138,7 +138,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 James Dean - message me via GitHub
 
-Project Link: [https://github.com/AcylSilane/hydrogen_blender](https://github.com/AcylSilane/hydrogen_blender)
+Project Link: [https://github.com/AcylSilane/hydridic_blender](https://github.com/AcylSilane/hydridic_blender)
 
 
 
@@ -150,15 +150,15 @@ Project Link: [https://github.com/AcylSilane/hydrogen_blender](https://github.co
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/AcylSilane/hydrogen_blender.svg?style=appveyor
-[contributors-url]: https://github.com/AcylSilane/hydrogen_blender/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/AcylSilane/hydrogen_blender.svg?style=appveyor
-[forks-url]: https://github.com/AcylSilane/hydrogen_blender/network/members
-[stars-shield]: https://img.shields.io/github/stars/AcylSilane/hydrogen_blender.svg?style=appveyor
-[stars-url]: https://github.com/AcylSilane/hydrogen_blender/stargazers
-[issues-shield]: https://img.shields.io/github/issues/AcylSilane/hydrogen_blender.svg?style=appveyor
-[issues-url]: https://github.com/AcylSilane/hydrogen_blender/issues
-[license-shield]: https://img.shields.io/github/license/AcylSilane/hydrogen_blender.svg?style=appveyor
-[license-url]: https://github.com/AcylSilane/hydrogen_blender/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/AcylSilane/hydridic_blender.svg?style=appveyor
+[contributors-url]: https://github.com/AcylSilane/hydridic_blender/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/AcylSilane/hydridic_blender.svg?style=appveyor
+[forks-url]: https://github.com/AcylSilane/hydridic_blender/network/members
+[stars-shield]: https://img.shields.io/github/stars/AcylSilane/hydridic_blender.svg?style=appveyor
+[stars-url]: https://github.com/AcylSilane/hydridic_blender/stargazers
+[issues-shield]: https://img.shields.io/github/issues/AcylSilane/hydridic_blender.svg?style=appveyor
+[issues-url]: https://github.com/AcylSilane/hydridic_blender/issues
+[license-shield]: https://img.shields.io/github/license/AcylSilane/hydridic_blender.svg?style=appveyor
+[license-url]: https://github.com/AcylSilane/hydridic_blender/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=appveyor&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/DeanJamesR

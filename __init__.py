@@ -12,23 +12,74 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 bl_info = {
-    "name" : "Hydrogen-Blender",
-    "author" : "James Dean",
-    "description" : "Import and manipulate molecules, crystals, and other chemical species in an efficient manner",
-    "blender" : (2, 80, 0),
-    "version" : (0, 1, 0),
-    "location" : "File -> Import -> Chemical",
-    "warning" : "",
-    "tracker_url" : "https://github.com/AcylSilane/hydrogen_blender/issues",
-    "category" : "Import-Export"
+    "name": "Hydridic Blender",
+    "author": "James Dean",
+    "description": "Import and manipulate molecules, crystals, and other chemical species in an efficient manner",
+    "blender": (2, 80, 0),
+    "version": (0, 1, 0),
+    "location": "File -> Import -> Chemical",
+    "warning": "",
+    "tracker_url": "https://github.com/AcylSilane/hydridic_blender/issues",
+    "category": "Import-Export",
 }
 
+import bpy
+from typing import Set
 from . import auto_load
 
 auto_load.init()
 
+dependencies = ("ASE",)
+
+
+class HYDRIDIC_install_dependencies(bpy.types.Operator):
+    """
+    Handles installing Python packages necessary for this to run.
+    """
+
+    bl_idname = "hydridic.install_dependencies"
+    bl_label = "Install Dependencies"
+    bl_description = (
+        "Downloads and installs packages required for this add-on to work."
+        " An internet connection is required, and Blender may need to run"
+        " with elevated permissions."
+    )
+    bl_options = {"REGISTER", "INTERNAL"}
+
+    @staticmethod
+    def dependencies_installed() -> bool:
+        return False
+
+    @classmethod
+    def poll(self, context: bpy.types.Context) -> bool:
+        return not self.dependencies_installed()
+
+    def execute(self, context: bpy.types.Context) -> Set:
+        print("Button Pressed")
+        return {"FINISHED"}
+
+
+class HYDRIDIC_preferences(bpy.types.AddonPreferences):
+    """
+    Preferences pane, giving the user a button to install the dependencies.
+    """
+
+    bl_idname = __name__
+
+    def draw(self, context: bpy.types.Context) -> None:
+        layout = self.layout
+        layout.operator(HYDRIDIC_install_dependencies.bl_idname, icon="CONSOLE")
+
+
 def register():
+    for item in (HYDRIDIC_install_dependencies, HYDRIDIC_preferences):
+        bpy.utils.register_class(item)
+
     auto_load.register()
 
+
 def unregister():
+    for item in (HYDRIDIC_install_dependencies, HYDRIDIC_preferences):
+        bpy.utils.unregister_class(item)
+
     auto_load.unregister()

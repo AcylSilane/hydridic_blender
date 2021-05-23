@@ -1,2 +1,4 @@
-.vscode/settings.json
+blender_autocomplete
+.vscode
+__pycache__
 *.pyc
