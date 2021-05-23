@@ -23,6 +23,8 @@ jobs:
           BEFORE: ${{ github.event.before }}
           # The SHA of the latest commit (automatically set)
           SHA: ${{ github.sha }}
+          # Token used by ToDo to Issue
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # The GitHub access token to allow us to retrieve, create and update issues (automatically set)
           CLOSE_ISSUES: true
           # For multiline TODOs, format each line as a new paragraph when creating the issue
