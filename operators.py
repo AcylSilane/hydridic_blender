@@ -58,7 +58,8 @@ class HYDRIDIC_OT_import_chemical_structure(
         return True
 
     def execute(self, context):
-        print(self.properties.filepath)
+        atoms = utils.ingest.get_atoms(self.properties.filepath)
+        utils.ingest.add_structure(atoms, context)
         return {"FINISHED"}
 
 
