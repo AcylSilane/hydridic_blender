@@ -9,8 +9,7 @@ import bpy, bpy_extras
 
 import utils
 
-
-DEPENDENCIES = ("ase",)
+DEPENDENCIES = ("ase", )
 
 
 class HYDRIDIC_OT_install_dependencies(bpy.types.Operator):
@@ -28,26 +27,27 @@ class HYDRIDIC_OT_install_dependencies(bpy.types.Operator):
     bl_description = (
         "Downloads and installs packages required for this add-on to work."
         " An internet connection is required, and Blender may need to run"
-        " with elevated permissions."
-    )
+        " with elevated permissions.")
     bl_options = {"REGISTER", "INTERNAL"}
 
     @classmethod
     def dependencies_installed(cls) -> bool:
-        return all(importlib.util.find_spec(dependency) for dependency in DEPENDENCIES)
+        return all(
+            importlib.util.find_spec(dependency)
+            for dependency in DEPENDENCIES)
 
     @classmethod
     def poll(self, context: bpy.types.Context) -> bool:
         return not self.dependencies_installed()
 
     def execute(self, context: bpy.types.Context):
-        subprocess.call([sys.executable, "-m", "pip", "install", *DEPENDENCIES])
+        subprocess.call(
+            [sys.executable, "-m", "pip", "install", *DEPENDENCIES])
         return {"FINISHED"}
 
 
-class HYDRIDIC_OT_import_chemical_structure(
-    bpy.types.Operator, bpy_extras.io_utils.ImportHelper
-):
+class HYDRIDIC_OT_import_chemical_structure(bpy.types.Operator,
+                                            bpy_extras.io_utils.ImportHelper):
     """Import a chemical structure into Blender. Supports all ASE-supported formats."""
 
     bl_idname = "hydridic.import_chemical_structure"
@@ -58,11 +58,12 @@ class HYDRIDIC_OT_import_chemical_structure(
         return True
 
     def execute(self, context):
-        atoms = utils.ingest.get_atoms(self.properties.filepath)
-        utils.ingest.add_structure(atoms, context)
+        chemical = utils.ingest.Chemical.from_file(self.properties.filepath, bpy.context)
+        chemical.add_structure_to_scene()
         return {"FINISHED"}
 
 
-classes = (HYDRIDIC_OT_install_dependencies, HYDRIDIC_OT_import_chemical_structure)
+classes = (HYDRIDIC_OT_install_dependencies,
+           HYDRIDIC_OT_import_chemical_structure)
 
 register, unregister = bpy.utils.register_classes_factory(classes)

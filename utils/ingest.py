@@ -1,175 +1,128 @@
 """
-Helper functions to aid in reading/writing chemical data
+Helper functions to aid in reading/writing chemical data.
 """
-
-from typing import Dict
-import re
 
 import ase, ase.data, ase.io
 import bpy
 
 
-def get_atoms(filepath: str) -> ase.Atoms:
-    # Read whatever file the atoms are stored in
-    atoms = ase.io.read(filepath)
+class Chemical(ase.Atoms):
+    def __init__(self, atoms: ase.Atoms, context: bpy.context):
+        # TODO: Add support for multi-image structures
+        self.atoms = atoms
+        self.__context = context
 
-    # Center the atoms
-    # TODO: Make centering optional
-    if any(atoms.pbc):
-        # System is periodic; don't need to center
-        pass
-    else:
-        # System is nonperiodic; we should center it
-        atoms.center(about=0)
+        # Create a new working directory for the molecule
+        self.collection_name = "New Chemical Structure" 
+        self.collection = bpy.data.collections.new(self.collection_name)
+        context.scene.collection.children.link(self.collection)
 
-    return atoms
+       
+        
 
+    # ======
+    # Public
+    # ======
 
-def add_structure(atoms: ase.Atoms, context: bpy.context):
-    """
-    Given an ASE atoms object, will add the structure to blender.
-    """
+    @classmethod
+    def from_file(cls, filepath: str, context: bpy.context):
+        """
+        Constructor for when we've got a filepath specified. Reads from disk.
+        """
+        atoms = ase.io.read(filepath)
 
-    # Create a collection to hold the structure
-    # TODO: Add support for multi-image structures
-    collection_name = "New Chemical Structure"
-    molecule_collection = bpy.data.collections.new(collection_name)
-    context.scene.collection.children.link(molecule_collection)
+        # Center the atoms
+        # TODO: Make centering optional
+        if any(atoms.pbc):
+            # System is periodic; don't need to center
+            pass
+        else:
+            # System is nonperiodic; we should center it
+            atoms.center(about=0)
 
-    # Save a reference to the previous collection, and change to the new one
-    # This way, any new objects we spawn wind up in the new collection. Keeps stuff neat and tidy.
-    prev_collection = context.view_layer.active_layer_collection
-    molecule_layer_collection = context.view_layer.layer_collection.children[-1]
-    context.view_layer.active_layer_collection = molecule_layer_collection
+        return cls(atoms, context)
 
-    # Create a mesh to hold atomic positions. Keep a reference around for the object.
-    mesh = point_cloud_from_atoms(collection_name, atoms, context=context)
-    molecule_object_name = f"Molecule_{collection_name}"
-    molecule_collection.objects.link(bpy.data.objects.new(molecule_object_name, mesh))
-    molecule_object = molecule_collection.objects[molecule_object_name]
+    def add_structure_to_scene(self) -> None:
+        """
+        Adds the stored atoms object into the scene.
+        """
+        # TODO: This can be refactored into a dectorator that steps into a collection and leaves
 
-    # Create a new collection to hold the atoms
-    atoms_collection_name = "atom_instances"
-    atoms_collection = bpy.data.collections.new(atoms_collection_name)
-    molecule_collection.children.link(atoms_collection)
-    atoms_layer_collection = molecule_layer_collection.children[-1]
-    context.view_layer.active_layer_collection = atoms_layer_collection
+        # Save a reference to the previous collection, and change to the new one
+        # This way, any new objects we spawn wind up in the new collection. Keeps stuff neat and tidy.
 
-    # Determine which atoms are in the system, and create their base instances.
-    atom_instances = {}
-    for atom_type in set(atoms.get_chemical_symbols()):
-        atom_ref = create_atom_instance(atom_type, context)
-        atom_instances[atom_type] = atom_ref
+        prev_collection = self.__context.view_layer.active_layer_collection
+        molecule_layer_collection = self.__context.view_layer.layer_collection.children[-1]
+        self.__context.view_layer.active_layer_collection = molecule_layer_collection
 
-    # Create a particle system in the molecule object to hold the instances
-    context.view_layer.active_layer_collection = molecule_layer_collection
-    particle_system = create_particle_system(molecule_object, atoms_collection, atoms)
-    sort_atoms_in_particle_system(particle_system, atoms)
+        self.__create_molecule_object()
 
-    context.view_layer.active_layer_collection = prev_collection
+        # And then, finally, return to the collection we started out in
+        self.__context.view_layer.active_layer_collection = prev_collection
 
+    # =======
+    # Private
+    # =======
 
-def point_cloud_from_atoms(
-    collection_name: str, atoms: ase.Atoms, context: bpy.context
-) -> bpy.types.Mesh:
-    """
-    Creates a point cloud based on the atomic positions
-    """
-
-    mesh = bpy.data.meshes.new(f"Mesh_{collection_name}")
-    verts = atoms.get_positions() + context.scene.cursor.location
-    # TODO: Derive edges from atomic neighborlist
-    edges = []
-    faces = []
-
-    mesh.from_pydata(verts, edges, faces)
-    mesh.validate()
-    mesh.update()
-
-    return mesh
+    @property
+    def __active_collection(self):
+        return self.__context.view_layer.active_layer_collection.collection
 
 
-def create_atom_instance(atom_type: str, context: bpy.context) -> bpy.types.Object:
-    """
-    Spawns NURBs spheres to be instanced later on in the atomic coordinates
-    """
-    # Look up the covalent radius
-    atomic_number = ase.data.atomic_numbers[atom_type]
-    covalent_radius = ase.data.covalent_radii[atomic_number]
+    def __create_molecule_object(self) -> None:
+        """
+        This will create a molecule object from the atoms object stored in this class.
+        """
+        unique_symbols = set(self.atoms.get_chemical_symbols())
+        for symbol in unique_symbols:
+            # Create the mesh
+            selected_atoms = self.atoms[self.atoms.symbols == symbol]
+            homonuclear_mesh = self.__mesh_from_atoms(selected_atoms)
 
-    # Spawn the atom, set its name, and hide it from renders
-    # We're going to put it into a particle system later, so we don't
-    # want to actually draw it.
-    bpy.ops.surface.primitive_nurbs_surface_sphere_add(
-        radius=covalent_radius, location=context.scene.cursor.location
-    )
-    bpy.context.active_object.name = f"instance_{atom_type}"
-    bpy.context.active_object.hide_render = True
-    bpy.context.active_object.hide_set(True)
+            # Add the mesh to the collection
+            homonuclear_positions_name = f"PointCloud_{symbol}_{self.collection_name}"
+            homonuclear_object = bpy.data.objects.new(homonuclear_positions_name, homonuclear_mesh)
+            homonuclear_object.instance_type = "VERTS"
+            self.__active_collection.objects.link(homonuclear_object)
 
-    # Store a reference to the object we created
-    current_object = bpy.context.active_object
-    return current_object
+            # Create and bind instances for the atomic type
+            nurbs = self.__spawn_nurbs_from_atomic_symbol(symbol)
+            nurbs.parent = homonuclear_object
 
+    def __mesh_from_atoms(self, atoms: ase.Atoms, mesh_name: str = None) -> bpy.types.Mesh:
+        """
+        Creates a point cloud based on the atomic positions passed in.
+        """
+        if mesh_name is None:
+            mesh_name = f"Mesh_{self.collection_name}"
 
-def create_particle_system(
-    molecule_object: bpy.types.Object,
-    atoms_collection: bpy.types.Collection,
-    atoms: ase.Atoms,
-) -> bpy.types.ParticleSystem:
-    """
-    Creates a particle system in the point cloud for the molecule, and assigns
-    atom types to each point.
-    """
-    # Create the particle system
-    bpy.context.view_layer.objects.active = molecule_object
-    molecule_object.modifiers.new("Molecule Particle System", type="PARTICLE_SYSTEM")
-    particle_system = molecule_object.particle_systems[-1]
+        verts = atoms.get_positions() + self.__context.scene.cursor.location
+        edges = []  # TODO: Derive edges from atomic neighborlist
+        faces = []
 
-    # Set one atom per vert
-    settings = particle_system.settings
-    settings.type = "HAIR"
-    settings.count = len(atoms)
-    settings.emit_from = "VERT"
-    settings.use_emit_random = False
+        mesh = bpy.data.meshes.new(mesh_name)
+        mesh.from_pydata(verts, edges, faces)
+        mesh.validate()
+        mesh.update()
 
-    # Set the system to instance the collection
-    settings.render_type = "COLLECTION"
-    settings.hair_length = 1
-    settings.particle_size = 1
-    settings.instance_collection = atoms_collection
-    settings.use_collection_count = True
+        return mesh
 
-    return particle_system
+    def __spawn_nurbs_from_atomic_symbol(self, atom_type: str) -> bpy.types.Object:
+        """
+        Spawns NURBs spheres to be instanced later on in the atomic coordinates.
+        """
+        # Look up the covalent radius
+        atomic_number = ase.data.atomic_numbers[atom_type]
+        covalent_radius = ase.data.covalent_radii[atomic_number]
 
-def sort_atoms_in_particle_system(particle_system: bpy.types.ParticleSystem, atoms: ase.Atoms):
-    """
-    Because we've set the collection of atom instances to be what's rendered in the particle system,
-    we start out with a list of atoms in the instance weights of the particle system. Seemingly, they're
-    in a random order.
+        # Spawn the atom, set its name, and hide it from renders
+        bpy.ops.surface.primitive_nurbs_surface_sphere_add(radius=covalent_radius,
+                                                           location=self.__context.scene.cursor.location)
+        bpy.context.active_object.name = f"instance_{atom_type}"
+        bpy.context.active_object.hide_render = True
+        bpy.context.active_object.hide_set(True)
 
-    Constraints:
-        - We can move the currently-selected index around as much as we'd like.
-        - Instance members can be copied, and appear at the start of the list.
-        - Copying an instance sets the currently-selected index to be the start of the list.
-        - We always start with 1 (and only 1) of each atom.
-    """
-    
-    # Figure out which index things are located in
-    settings = particle_system.settings
-    particle_locs = {}
-    for index, name in enumerate(reversed(settings.instance_weights.keys()), 1):
-        symbol = re.search("(?<=_)[A-z]+(?=:?)", name)[0]
-        particle_locs[symbol] = -index
-
-    print(particle_locs)
-
-    for atom in atoms:
-        index = particle_locs[atom.symbol]
-        to_clone = particle_system.settings.instance_weights.keys()[index]
-
-        settings.active_instanceweight_index = index
-        print(settings.active_instanceweight_index)
-        bpy.ops.particle.dupliob_move_up()
-        bpy.ops.particle.dupliob_copy()
-    bpy.ops.particle.dupliob_refresh()
+        # Store a reference to the object we created
+        current_object = bpy.context.active_object
+        return current_object
+        
