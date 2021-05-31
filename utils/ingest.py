@@ -13,12 +13,9 @@ class Chemical(ase.Atoms):
         self.__context = context
 
         # Create a new working directory for the molecule
-        self.collection_name = "New Chemical Structure" 
+        self.collection_name = "New Chemical Structure"
         self.collection = bpy.data.collections.new(self.collection_name)
         context.scene.collection.children.link(self.collection)
-
-       
-        
 
     # ======
     # Public
@@ -67,7 +64,6 @@ class Chemical(ase.Atoms):
     @property
     def __active_collection(self):
         return self.__context.view_layer.active_layer_collection.collection
-
 
     def __create_molecule_object(self) -> None:
         """
@@ -125,4 +121,3 @@ class Chemical(ase.Atoms):
         # Store a reference to the object we created
         current_object = bpy.context.active_object
         return current_object
-        
