@@ -3,6 +3,7 @@ Definition for the Chemical class, acting as an interface between ASE and Blende
 """
 
 import ase, ase.data, ase.io
+import time
 import bpy
 
 
@@ -12,11 +13,15 @@ class Chemical(ase.Atoms):
         self.atoms = atoms
         self.__context = context
         self.name = self.get_chemical_formula()
+        self.creation_timestamp = time.time()
 
         # Create a new working directory for the molecule
         self.collection_name = f"Chemical Structure: {self.name}"
         self.collection = bpy.data.collections.new(self.collection_name)
         context.scene.collection.children.link(self.collection)
+
+    def __hash__(self) -> int:
+        return hash(self.name + str(self.creation_timestamp))
 
     # ======
     # Public
