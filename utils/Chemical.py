@@ -36,7 +36,7 @@ class Chemical(ase.Atoms):
             filepath (str): Path to the file containing chemical data.
             context (bpy.context): Object containing blender's current context
 
-        Notes:
+        Note:
             The filepath argument must be readable by ase in order for the chemical to be loaded.
 
         Returns:
