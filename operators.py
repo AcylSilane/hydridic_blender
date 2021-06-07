@@ -58,7 +58,7 @@ class HYDRIDIC_OT_import_chemical_structure(bpy.types.Operator,
         return True
 
     def execute(self, context):
-        chemical = utils.ingest.Chemical.from_file(self.properties.filepath, bpy.context)
+        chemical = utils.Chemical.from_file(self.properties.filepath, bpy.context)
         chemical.add_structure_to_scene()
         return {"FINISHED"}
 

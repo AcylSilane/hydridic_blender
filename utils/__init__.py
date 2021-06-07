@@ -1,1 +1,1 @@
-from . import ingest
+from .chemical import Chemical

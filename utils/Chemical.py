@@ -1,5 +1,5 @@
 """
-Helper functions to aid in reading/writing chemical data.
+Definition for the Chemical class, acting as an interface between ASE and Blender
 """
 
 import ase, ase.data, ase.io
