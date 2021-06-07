@@ -11,9 +11,10 @@ class Chemical(ase.Atoms):
         # TODO: Add support for multi-image structures
         self.atoms = atoms
         self.__context = context
+        self.name = self.get_chemical_formula()
 
         # Create a new working directory for the molecule
-        self.collection_name = "New Chemical Structure"
+        self.collection_name = f"Chemical Structure: {self.name}"
         self.collection = bpy.data.collections.new(self.collection_name)
         context.scene.collection.children.link(self.collection)
 
@@ -35,7 +36,7 @@ class Chemical(ase.Atoms):
 
         Returns:
             Chemical: A new instance of the Chemical class.
-        """        
+        """
         atoms = ase.io.read(filepath)
 
         # Center the atoms
@@ -52,7 +53,7 @@ class Chemical(ase.Atoms):
     def add_structure_to_scene(self) -> None:
         """
         Adds the stored atoms object into the scene.
-        """        
+        """
         # TODO: This can be refactored into a dectorator that steps into a collection and leaves
 
         # Save a reference to the previous collection, and change to the new one
@@ -110,7 +111,7 @@ class Chemical(ase.Atoms):
 
         Returns:
             bpy.types.Mesh: A mesh representing the chemical species in the atoms object.
-        """        
+        """
         if mesh_name is None:
             mesh_name = f"Mesh_{self.collection_name}"
 
@@ -133,7 +134,7 @@ class Chemical(ase.Atoms):
 
         Returns:
             bpy.types.Object: The NURBs sphere that was created.
-        """        
+        """
         # Look up the covalent radius
         atomic_number = ase.data.atomic_numbers[atom_type]
         covalent_radius = ase.data.covalent_radii[atomic_number]
