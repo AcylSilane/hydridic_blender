@@ -9,7 +9,17 @@ import bpy
 
 
 class Chemical(ase.Atoms):
+    """
+    A chemical species, such as a small molecule, a polymer, a crystal, a protein, etc.
+    """
     def __init__(self, atoms: ase.Atoms, context: bpy.context):
+        """
+        Init for the chemical object.
+
+        Args:
+            atoms (ase.Atoms): An ASE Atoms Object represnting the chemical of interest.
+            context (bpy.context): Blender context, to be manipulated as the chemical is spawned.
+        """
         # TODO: Add support for multi-image structures
         self.atoms = atoms
         self.__context = context
