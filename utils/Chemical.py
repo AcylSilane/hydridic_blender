@@ -1,6 +1,7 @@
 """
 Definition for the Chemical class, acting as an interface between ASE and Blender
 """
+from __future__ import annotations
 
 import ase, ase.data, ase.io
 import time
@@ -28,7 +29,7 @@ class Chemical(ase.Atoms):
     # ======
 
     @classmethod
-    def from_file(cls, filepath: str, context: bpy.context):
+    def from_file(cls, filepath: str, context: bpy.context) -> Chemical:
         """
         Constructor for when we've got a filepath specified. Reads from disk.
 
@@ -55,7 +56,7 @@ class Chemical(ase.Atoms):
 
         return cls(atoms, context)
 
-    def add_structure_to_scene(self) -> None:
+    def add_structure_to_scene(self) -> Chemical:
         """
         Adds the stored atoms object into the scene.
         """
@@ -72,6 +73,7 @@ class Chemical(ase.Atoms):
 
         # And then, finally, return to the collection we started out in
         self.__context.view_layer.active_layer_collection = prev_collection
+        return self
 
     # =======
     # Private
@@ -79,14 +81,14 @@ class Chemical(ase.Atoms):
 
     @property
     def __active_collection(self) -> bpy.types.Collection:
-        """Finds the current active collection.
+        """Finds the current active collection. 
 
         Returns:
             bpy.types.Collection: The currently active collection.
         """
         return self.__context.view_layer.active_layer_collection.collection
 
-    def __create_molecule_object(self) -> None:
+    def __create_molecule_object(self) -> Chemical:
         """
         This will create a molecule object from the atoms object stored in this class.
         """
@@ -105,6 +107,7 @@ class Chemical(ase.Atoms):
             # Create and bind instances for the atomic type
             nurbs = self.__spawn_nurbs_from_atomic_symbol(symbol)
             nurbs.parent = homonuclear_object
+        return self
 
     def __mesh_from_atoms(self, atoms: ase.Atoms, mesh_name: str = None) -> bpy.types.Mesh:
         """
