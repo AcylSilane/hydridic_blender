@@ -2,6 +2,7 @@
 Definition for the Chemical class, acting as an interface between ASE and Blender
 """
 from __future__ import annotations
+from utils import Bonds
 
 import ase, ase.data, ase.io
 import time
@@ -18,10 +19,11 @@ class Chemical(ase.Atoms):
 
         Args:
             atoms (ase.Atoms): An ASE Atoms Object represnting the chemical of interest.
-            context (bpy.context): Blender context, to be manipulated as the chemical is spawned.
+            context (bpy.context): Blender context, to be manipulated as the chemical is
         """
         # TODO: Add support for multi-image structures
         self.atoms = atoms
+        self.__bonds = Bonds(self)
         self.__context = context
         self.name = self.get_chemical_formula()
         self.creation_timestamp = time.time()
@@ -79,7 +81,8 @@ class Chemical(ase.Atoms):
         molecule_layer_collection = self.__context.view_layer.layer_collection.children[-1]
         self.__context.view_layer.active_layer_collection = molecule_layer_collection
 
-        self.__create_molecule_object()
+        self.__spawn_chemical()
+        self.__spawn_bonds()
 
         # And then, finally, return to the collection we started out in
         self.__context.view_layer.active_layer_collection = prev_collection
@@ -98,7 +101,7 @@ class Chemical(ase.Atoms):
         """
         return self.__context.view_layer.active_layer_collection.collection
 
-    def __create_molecule_object(self) -> Chemical:
+    def __spawn_chemical(self) -> Chemical:
         """
         This will create a molecule object from the atoms object stored in this class.
         """
@@ -134,7 +137,7 @@ class Chemical(ase.Atoms):
             mesh_name = f"Mesh_{self.collection_name}"
 
         verts = atoms.get_positions() + self.__context.scene.cursor.location
-        edges = []  # TODO: Derive edges from atomic neighborlist
+        edges = []
         faces = []
 
         mesh = bpy.data.meshes.new(mesh_name)
@@ -167,3 +170,14 @@ class Chemical(ase.Atoms):
         # Store a reference to the object we created
         current_object = bpy.context.active_object
         return current_object
+
+    def __spawn_bonds(self) -> Chemical:
+        """
+        Spawns all bonds into the scene.
+        """
+        offset = self.__context.scene.cursor.location
+        for bond in self.__bonds:
+            atom_start = self.atoms[bond[0]]
+            atom_end = self.atoms[bond[1]]
+            bond.spawn_bond_from_atoms(atom_start, atom_end, offset)
+        return self
