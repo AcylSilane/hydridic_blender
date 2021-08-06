@@ -1,33 +1,59 @@
 """
-Helper functions to aid in reading/writing chemical data.
+Definition for the Chemical class, acting as an interface between ASE and Blender
 """
+from __future__ import annotations
+from utils import Bonds
 
 import ase, ase.data, ase.io
+import time
 import bpy
 
 
 class Chemical(ase.Atoms):
+    """
+    A chemical species, such as a small molecule, a polymer, a crystal, a protein, etc.
+    """
     def __init__(self, atoms: ase.Atoms, context: bpy.context):
+        """
+        Init for the chemical object.
+
+        Args:
+            atoms (ase.Atoms): An ASE Atoms Object represnting the chemical of interest.
+            context (bpy.context): Blender context, to be manipulated as the chemical is
+        """
         # TODO: Add support for multi-image structures
         self.atoms = atoms
+        self.__bonds = Bonds(self)
         self.__context = context
+        self.name = self.get_chemical_formula()
+        self.creation_timestamp = time.time()
 
         # Create a new working directory for the molecule
-        self.collection_name = "New Chemical Structure" 
+        self.collection_name = f"Chemical Structure: {self.name}"
         self.collection = bpy.data.collections.new(self.collection_name)
         context.scene.collection.children.link(self.collection)
 
-       
-        
+    def __hash__(self) -> int:
+        return hash(self.name + str(self.creation_timestamp))
 
     # ======
     # Public
     # ======
 
     @classmethod
-    def from_file(cls, filepath: str, context: bpy.context):
+    def from_file(cls, filepath: str, context: bpy.context) -> Chemical:
         """
         Constructor for when we've got a filepath specified. Reads from disk.
+
+        Args:
+            filepath (str): Path to the file containing chemical data.
+            context (bpy.context): Object containing blender's current context
+
+        Note:
+            The filepath argument must be readable by ase in order for the chemical to be loaded.
+
+        Returns:
+            Chemical: A new instance of the Chemical class.
         """
         atoms = ase.io.read(filepath)
 
@@ -42,7 +68,7 @@ class Chemical(ase.Atoms):
 
         return cls(atoms, context)
 
-    def add_structure_to_scene(self) -> None:
+    def add_structure_to_scene(self) -> Chemical:
         """
         Adds the stored atoms object into the scene.
         """
@@ -55,21 +81,27 @@ class Chemical(ase.Atoms):
         molecule_layer_collection = self.__context.view_layer.layer_collection.children[-1]
         self.__context.view_layer.active_layer_collection = molecule_layer_collection
 
-        self.__create_molecule_object()
+        self.__spawn_chemical()
+        self.__spawn_bonds()
 
         # And then, finally, return to the collection we started out in
         self.__context.view_layer.active_layer_collection = prev_collection
+        return self
 
     # =======
     # Private
     # =======
 
     @property
-    def __active_collection(self):
+    def __active_collection(self) -> bpy.types.Collection:
+        """Finds the current active collection. 
+
+        Returns:
+            bpy.types.Collection: The currently active collection.
+        """
         return self.__context.view_layer.active_layer_collection.collection
 
-
-    def __create_molecule_object(self) -> None:
+    def __spawn_chemical(self) -> Chemical:
         """
         This will create a molecule object from the atoms object stored in this class.
         """
@@ -88,16 +120,24 @@ class Chemical(ase.Atoms):
             # Create and bind instances for the atomic type
             nurbs = self.__spawn_nurbs_from_atomic_symbol(symbol)
             nurbs.parent = homonuclear_object
+        return self
 
     def __mesh_from_atoms(self, atoms: ase.Atoms, mesh_name: str = None) -> bpy.types.Mesh:
         """
         Creates a point cloud based on the atomic positions passed in.
+
+        Args:
+            atoms (ase.Atoms): An ASE Atoms object that will be used to generate the mesh.
+            mesh_name (str, optional): Name that will be given to the mesh in Blender. Defaults to None.
+
+        Returns:
+            bpy.types.Mesh: A mesh representing the chemical species in the atoms object.
         """
         if mesh_name is None:
             mesh_name = f"Mesh_{self.collection_name}"
 
         verts = atoms.get_positions() + self.__context.scene.cursor.location
-        edges = []  # TODO: Derive edges from atomic neighborlist
+        edges = []
         faces = []
 
         mesh = bpy.data.meshes.new(mesh_name)
@@ -108,8 +148,13 @@ class Chemical(ase.Atoms):
         return mesh
 
     def __spawn_nurbs_from_atomic_symbol(self, atom_type: str) -> bpy.types.Object:
-        """
-        Spawns NURBs spheres to be instanced later on in the atomic coordinates.
+        """Spawns a NURBs sphere at the cursor with radius proportional to the element's covalent radius.
+
+        Args:
+            atom_type (str): Chemical symbol (e.g. "Fe" for iron, "C" for carbon, etc.) representing the atom.
+
+        Returns:
+            bpy.types.Object: The NURBs sphere that was created.
         """
         # Look up the covalent radius
         atomic_number = ase.data.atomic_numbers[atom_type]
@@ -125,4 +170,14 @@ class Chemical(ase.Atoms):
         # Store a reference to the object we created
         current_object = bpy.context.active_object
         return current_object
-        
+
+    def __spawn_bonds(self) -> Chemical:
+        """
+        Spawns all bonds into the scene.
+        """
+        offset = self.__context.scene.cursor.location
+        for bond in self.__bonds:
+            atom_start = self.atoms[bond[0]]
+            atom_end = self.atoms[bond[1]]
+            bond.spawn_bond_from_atoms(atom_start, atom_end, offset)
+        return self
