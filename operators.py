@@ -16,8 +16,8 @@ class HYDRIDIC_OT_install_dependencies(bpy.types.Operator):
     """
     Handles installing Python packages necessary for the addon to run.
 
-    It does this by checking if all of the packages specified in the "dependencies"
-    class attribute are installed. If any are missing, pip tries to install them.
+    It does this by checking if all of the packages specified in the "DEPENDENCIES"
+    variable are installed. If any are missing, pip tries to install them.
 
     The user accesses this operator via the addon preferences menu.
     """
