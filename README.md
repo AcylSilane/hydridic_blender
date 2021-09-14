@@ -20,9 +20,9 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/AcylSilane/hydridic_blender">
+  <!-- <a href="https://github.com/AcylSilane/hydridic_blender">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
+  </a> -->
 
   <h3 align="center">Hydridic Blender</h3>
 
@@ -32,8 +32,8 @@
     <a href="https://github.com/AcylSilane/hydridic_blender"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/AcylSilane/hydridic_blender">View Demo</a>
-    ·
+    <!-- <a href="https://github.com/AcylSilane/hydridic_blender">View Demo</a>
+    · -->
     <a href="https://github.com/AcylSilane/hydridic_blender/issues">Report Bug</a>
     ·
     <a href="https://github.com/AcylSilane/hydridic_blender/issues">Request Feature</a>
@@ -52,13 +52,13 @@
         <li><a href="#built-with">Built With</a></li>
       </ul>
     </li>
-    <li>
+    <!-- <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
       </ul>
-    </li>
+    </li> -->
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
@@ -72,8 +72,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-<!-- TODO: Update with an actual screenshot-->
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+Hydridic Blender is a Blender addon that helps develop stunning scientific visualizations of periodic and nonperiodic chemical systems.
 
 ### Built With
 
@@ -82,7 +81,7 @@
 
 
 <!-- GETTING STARTED -->
-## Getting Started
+<!-- ## Getting Started
 
 To get started with Hydridic Blender, follow the guide below.
 
@@ -92,17 +91,14 @@ TODO: Add pre-requisites section
 
 ### Installation
 
-TODO: Add installation instructions
+TODO: Add installation instructions -->
 
 
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-TODO: Add usage Examples
-
-<!-- TODO: Add documentation -->
-_For more examples, please refer to the [Documentation](https://example.com)_
+Currently, the addon supports the import of any chemical format supported by the Atomic Simulation Environment (XYZ, VASP, PDB, etc.) of both periodic and non-periodic varieties. Bonds are not currently calculated drawn, but this is something currently being worked on.
 
 
 
@@ -116,7 +112,7 @@ See the [open issues](https://github.com/AcylSilane/hydridic_blender/issues) for
 <!-- CONTRIBUTING -->
 ## Contributing
 
-This project welcomes any contributions! If you'd like to help out, please do the following:
+This is currently a 1-person project, being done in the author's spare time. That being said, any contributions are welcome! If you'd like to help out, please do the following:
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
