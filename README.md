@@ -20,9 +20,9 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <!-- <a href="https://github.com/AcylSilane/hydridic_blender">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a> -->
+  <a href="https://github.com/AcylSilane/hydridic_blender">
+    <img src="assets/logo.png" alt="Logo" width="256" height="256">
+  </a>
 
   <h3 align="center">Hydridic Blender</h3>
 
