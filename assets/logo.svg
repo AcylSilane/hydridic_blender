@@ -17,30 +17,10 @@
    version="1.1"
    id="svg8"
    inkscape:export-filename="E:\blender\Addons\hydridic_blender\assets\logo.png"
-   inkscape:export-xdpi="139.84804"
-   inkscape:export-ydpi="139.84804">
+   inkscape:export-xdpi="213.53777"
+   inkscape:export-ydpi="213.53777">
   <defs
      id="defs2">
-    <linearGradient
-       inkscape:collect="always"
-       id="linearGradient2856">
-      <stop
-         style="stop-color:#5e58ff;stop-opacity:1"
-         offset="0"
-         id="stop2852" />
-      <stop
-         style="stop-color:#5e58ff;stop-opacity:1"
-         offset="0.84912819"
-         id="stop2860" />
-      <stop
-         style="stop-color:#ffffff;stop-opacity:0"
-         offset="0.84912819"
-         id="stop2862" />
-      <stop
-         style="stop-color:#ffffff;stop-opacity:0"
-         offset="1"
-         id="stop2854" />
-    </linearGradient>
     <linearGradient
        inkscape:collect="always"
        id="linearGradient5024">
@@ -115,16 +95,6 @@
        gradientTransform="translate(-2.7404688e-6)" />
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#linearGradient2856"
-       id="linearGradient2850"
-       x1="279.61761"
-       y1="516.11041"
-       x2="279.61761"
-       y2="497.55362"
-       gradientUnits="userSpaceOnUse"
-       spreadMethod="repeat" />
-    <linearGradient
-       inkscape:collect="always"
        xlink:href="#linearGradient5024"
        id="linearGradient874"
        x1="13.506063"
@@ -141,18 +111,18 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8284271"
-     inkscape:cx="150.02051"
-     inkscape:cy="135.97385"
+     inkscape:zoom="0.99999999"
+     inkscape:cx="142.31973"
+     inkscape:cy="262.02777"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
      showgrid="false"
-     inkscape:window-width="2560"
-     inkscape:window-height="1377"
-     inkscape:window-x="1912"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1"
+     inkscape:window-width="1254"
+     inkscape:window-height="1080"
+     inkscape:window-x="2994"
+     inkscape:window-y="400"
+     inkscape:window-maximized="0"
      inkscape:snap-text-baseline="false" />
   <metadata
      id="metadata5">
@@ -230,7 +200,7 @@
      transform="translate(-73.303641,-102.5968)">
     <path
        id="text3056"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:58.0963px;line-height:1.25;font-family:'Agency FB';-inkscape-font-specification:'Agency FB, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:2.64054px;fill:url(#linearGradient2850);fill-opacity:1;stroke:none;stroke-width:5.48946;stroke-opacity:1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:58.0963px;line-height:1.25;font-family:'Agency FB';-inkscape-font-specification:'Agency FB, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:2.64054px;fill:#5e58ff;fill-opacity:1;stroke:none;stroke-width:5.48946;stroke-opacity:1"
        d="m 310.01562,418.96094 v 0.002 l -18.27734,17.0332 v 20.38672 l 18.27734,-17.0332 v 147.4043 h 14.90235 V 506.127 h 40.42187 v 80.62696 h 14.90235 l 18.5,-17.24024 V 549.127 l -18.5,17.24024 v -147.4063 h -14.90235 v 73.76367 h -40.42187 v -73.76367 z m 107.00782,0 -18.27735,17.0332 v 20.38672 l 18.2793,-17.03516 v 147.40821 h 55.32422 c 3.50236,0 6.36039,-1.10844 8.57617,-3.32422 2.21578,-2.21578 3.32422,-5.07577 3.32422,-8.57813 v -57.03711 c 0,-4.86042 -1.85938,-8.4354 -5.57617,-10.72265 l -12.65039,-8.14844 11.79297,-7.07617 c 4.00269,-3.00203 6.0039,-6.71883 6.0039,-11.15039 v -49.85547 c 0,-3.50236 -1.10844,-6.36039 -3.32422,-8.57617 -2.21578,-2.21578 -5.07381,-3.32422 -8.57617,-3.32422 h -54.89453 z m 14.90429,13.1875 h 36.88282 v 50.49804 l -14.90235,10.07813 h -21.98047 z m 0,73.55078 h 22.19532 l 15.11718,9.86328 v 58.00391 h -37.3125 z"
        transform="scale(0.26458333)" />
   </g>
