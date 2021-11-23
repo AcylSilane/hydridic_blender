@@ -133,6 +133,19 @@
        y2="55.181789"
        gradientUnits="userSpaceOnUse"
        gradientTransform="translate(12.438758,-20.30439)" />
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter867"
+       x="-0.00011229594"
+       width="1.0002246"
+       y="-0.000128839"
+       height="1.0002577">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.0023832657"
+         id="feGaussianBlur869" />
+    </filter>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -142,10 +155,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.8284271"
-     inkscape:cx="150.02051"
-     inkscape:cy="135.97385"
+     inkscape:cx="114.31162"
+     inkscape:cy="112.63933"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
      showgrid="false"
      inkscape:window-width="2560"
@@ -226,7 +239,7 @@
      inkscape:label="Front"
      inkscape:groupmode="layer"
      id="layer1"
-     style="display:inline"
+     style="display:inline;filter:url(#filter867)"
      transform="translate(-73.303641,-102.5968)">
     <path
        id="text3056"
