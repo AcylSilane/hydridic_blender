@@ -23,6 +23,18 @@
      id="defs2">
     <linearGradient
        inkscape:collect="always"
+       id="linearGradient881">
+      <stop
+         style="stop-color:#ecca8a;stop-opacity:1"
+         offset="0"
+         id="stop877" />
+      <stop
+         style="stop-color:#ff7b00;stop-opacity:1"
+         offset="1"
+         id="stop879" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
        id="linearGradient2856">
       <stop
          style="stop-color:#5e58ff;stop-opacity:1"
@@ -105,7 +117,7 @@
        spreadMethod="pad" />
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#linearGradient5024"
+       xlink:href="#linearGradient881"
        id="linearGradient5018"
        x1="77.568794"
        y1="148.16592"
@@ -158,7 +170,7 @@
      inkscape:cx="155.91231"
      inkscape:cy="138.62154"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer4"
      inkscape:document-rotation="0"
      showgrid="false"
      inkscape:window-width="2560"
