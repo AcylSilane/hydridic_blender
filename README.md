@@ -72,7 +72,9 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-Hydridic Blender is a Blender addon that helps develop stunning scientific visualizations of periodic and nonperiodic chemical systems.
+Hydridic Blender is a Blender addon that's designed to make it easier to create illustrations of molecules and crystals. It was inspired by the wonderful [Atomic Blender](https://docs.blender.org/manual/en/latest/addons/import_export/mesh_atomic.html) addon that comes stock with most Blender installations. Hydridic Blender tries to build on this idea, to give users a higher level of control over their 3D models.
+
+The logo here are the letters "H" and "B", dressed up to resemble the half up/down arrows [commonly used to represent electrons in orbital diagrams](https://chem.libretexts.org/Courses/Mount_Royal_University/Chem_1201/Unit_2._Periodic_Properties_of_the_Elements/2.02%3A_Electron_Configurations), superimposed on an orange (Blender's color!) [Frost Circle](https://docs.blender.org/manual/en/latest/addons/import_export/mesh_atomic.html).
 
 ### Built With
 
