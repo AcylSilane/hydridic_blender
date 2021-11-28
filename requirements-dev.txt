@@ -1,3 +1,5 @@
 debugpy
 flask
 pytest
+mock
+pytest-mock
