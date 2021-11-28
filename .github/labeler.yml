@@ -1,0 +1,18 @@
+# Changes to the repo structure
+repo:
+  - '*'
+
+deployment:
+  - scripts/**/*
+  - manifest.txt
+  - install_dev_packages.py
+  - .github
+  - .gitignore
+
+test:
+  - test/**/*
+
+source:
+  - __init__.py
+  - operators.py
+  - utils/**/*
