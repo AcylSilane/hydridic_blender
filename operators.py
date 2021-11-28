@@ -1,11 +1,13 @@
 """
 Blender operator classes are in this file
 """
+from typing import Set
 import sys
 import subprocess
 import importlib
 
-import bpy, bpy_extras
+import bpy
+import bpy_extras
 
 import utils
 
@@ -13,8 +15,7 @@ DEPENDENCIES = ("ase", )
 
 
 class HYDRIDIC_OT_install_dependencies(bpy.types.Operator):
-    """
-    Handles installing Python packages necessary for the addon to run.
+    """Handles installing Python packages necessary for the addon to run.
 
     It does this by checking if all of the packages specified in the "DEPENDENCIES"
     variable are installed. If any are missing, pip tries to install them.
@@ -32,15 +33,25 @@ class HYDRIDIC_OT_install_dependencies(bpy.types.Operator):
 
     @classmethod
     def dependencies_installed(cls) -> bool:
+        """Checks whether the addon's dependencies are installed. These
+        are specified by the DEPENDENCIES variable within this file.
+
+        Returns:
+            bool: True if (and only if) all dependencies are installed.
+        """
         return all(
             importlib.util.find_spec(dependency)
             for dependency in DEPENDENCIES)
 
     @classmethod
-    def poll(self, context: bpy.types.Context) -> bool:
-        return not self.dependencies_installed()
+    def poll(cls, context: bpy.types.Context) -> bool:
+        """Boolean that determines whether to set the addon install button to active"""
+        return not cls.dependencies_installed()
 
-    def execute(self, context: bpy.types.Context):
+    def execute(self, context: bpy.types.Context) -> Set[str]:
+        """Method determining what happens when the user clicks the 'install addon' buttoon'.
+        In this case, the addons defined in the DEPENDENCIES variable are installed with the
+        pip executable shipped by Blender."""
         subprocess.call(
             [sys.executable, "-m", "pip", "install", *DEPENDENCIES])
         return {"FINISHED"}
@@ -54,11 +65,11 @@ class HYDRIDIC_OT_import_chemical_structure(bpy.types.Operator,
     bl_label = "Import Chemical"
 
     @classmethod
-    def poll(self, context):
+    def poll(cls, context):
         return True
 
     def execute(self, context):
-        chemical = utils.Chemical.from_file(self.properties.filepath, bpy.context)
+        chemical = utils.chemical.Chemical.from_file(self.properties.filepath, bpy.context)
         chemical.add_structure_to_scene()
         return {"FINISHED"}
 
