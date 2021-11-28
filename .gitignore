@@ -3,3 +3,4 @@ blender_autocomplete
 .venv
 __pycache__
 *.pyc
+/blender_autocomplete/
