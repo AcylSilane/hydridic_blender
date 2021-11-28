@@ -1,6 +1,14 @@
+ase
+numpy
+
+# VSCode environment
 debugpy
 flask
+
+# Used to fake the bpy interface
+fake-bpy-module-2.93
+
+# Needed for Testing
 pytest
 mock
 pytest-mock
-fake-bpy-module-2.93
