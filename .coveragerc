@@ -3,6 +3,7 @@
 branch = True
 source =
     utils
+omit =
     __init__.py
     operators.py
 
