@@ -1,10 +1,10 @@
-import bpy
-
+"""Hydridic Blender is an addon designed to help import and draw stunning images of molecules and crystals.
+"""
 import os
 import sys
 
+import bpy
 sys.path.append(os.path.dirname(__file__))
-
 import operators
 
 bl_info = {
@@ -31,6 +31,7 @@ class HYDRIDIC_UL_preferences(bpy.types.AddonPreferences):
     bl_idname = __name__
 
     def draw(self, context: bpy.types.Context) -> None:
+        """Defines what is displayed to the user in the preferences menu"""
         layout = self.layout
         layout.operator(
             operators.HYDRIDIC_OT_install_dependencies.bl_idname, icon="CONSOLE"
@@ -42,6 +43,7 @@ class HYDRIDIC_UL_preferences(bpy.types.AddonPreferences):
 
 
 def menu_func_import(self, context):
+    """Defines which options are available in the 'file->import' menu"""
     layout = self.layout
     layout.operator(
         operators.HYDRIDIC_OT_import_chemical_structure.bl_idname,
@@ -57,6 +59,7 @@ modules = (operators,)
 
 
 def register():
+    """Makes classes and operators available to blender"""
     for module in modules:
         module.register()
     for cls in classes:
@@ -65,6 +68,7 @@ def register():
 
 
 def unregister():
+    """Makes classes and operators unavailable to blender"""
     for module in modules:
         module.unregister()
     for cls in classes:

@@ -2,14 +2,17 @@
 Definition for the Chemical class, acting as an interface between ASE and Blender
 """
 from __future__ import annotations
-from utils import Bonds
-
-import ase, ase.data, ase.io
 import time
+
 import bpy
+import ase
+import ase.data
+import ase.io
+
+from utils.bond import BondBag
 
 
-class Chemical(ase.Atoms):
+class Chemical:
     """
     A chemical species, such as a small molecule, a polymer, a crystal, a protein, etc.
     """
@@ -23,9 +26,9 @@ class Chemical(ase.Atoms):
         """
         # TODO: Add support for multi-image structures
         self.atoms = atoms
-        self.__bonds = Bonds(self)
+        self.__bonds = BondBag(self)
         self.__context = context
-        self.name = self.get_chemical_formula()
+        self.name = self.atoms.get_chemical_formula()
         self.creation_timestamp = time.time()
 
         # Create a new working directory for the molecule
@@ -94,7 +97,7 @@ class Chemical(ase.Atoms):
 
     @property
     def __active_collection(self) -> bpy.types.Collection:
-        """Finds the current active collection. 
+        """Finds the current active collection.
 
         Returns:
             bpy.types.Collection: The currently active collection.
@@ -181,3 +184,4 @@ class Chemical(ase.Atoms):
             atom_end = self.atoms[bond[1]]
             bond.spawn_bond_from_atoms(atom_start, atom_end, offset)
         return self
+    

@@ -1,2 +1,6 @@
 debugpy
 flask
+pytest
+mock
+pytest-mock
+fake-bpy-module-2.93
