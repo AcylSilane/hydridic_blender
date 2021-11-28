@@ -40,7 +40,7 @@ class BondBag:
                                                           primitive=ase.neighborlist.NewPrimitiveNeighborList)
 
     def __len__(self) -> int:
-        return len(self._bonds)
+        return len(self.bonds)
 
     def __repr__(self):
         return f"BondBag with {len(self)} bonds"

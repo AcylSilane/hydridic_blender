@@ -5,6 +5,7 @@ import os
 
 import pytest
 import ase.io
+import ase.neighborlist
 
 from config import fixtures_root
 
@@ -32,6 +33,17 @@ def molecule_ethanol():
     Useful for testing behavior with small nonperiodic molecular system.
     Ref: (Made this by hand in Avogadro)"""
     return ase.io.read(os.path.join(fixtures_root, "ethanol.xyz"))
+
+
+@pytest.fixture()
+def molecule_ethanol_bonds(molecule_ethanol):
+    neighborlist = ase.neighborlist.NeighborList(
+        cutoffs=ase.neighborlist.natural_cutoffs(molecule_ethanol),
+        self_interaction=False,
+        primitive=ase.neighborlist.NewPrimitiveNeighborList
+    )
+    neighborlist.update(molecule_ethanol)
+    return neighborlist.get_connectivity_matrix(sparse=True)
 
 
 @pytest.fixture()
