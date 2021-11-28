@@ -1,7 +1,6 @@
-blender_autocomplete
+blender_autocomplete/*
 .vscode
 .idea
 .venv
 __pycache__
 *.pyc
-/blender_autocomplete/
