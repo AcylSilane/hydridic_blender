@@ -4,6 +4,7 @@ import os
 import sys
 
 import bpy
+
 sys.path.append(os.path.dirname(__file__))
 import operators
 
@@ -18,6 +19,7 @@ bl_info = {
     "tracker_url": "https://github.com/AcylSilane/hydridic_blender/issues",
     "category": "Import-Export",
 }
+
 
 # =================
 # Addon Preferences

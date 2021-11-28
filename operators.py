@@ -11,7 +11,7 @@ import bpy_extras
 
 import utils
 
-DEPENDENCIES = ("ase", )
+DEPENDENCIES = ("ase",)
 
 
 class HYDRIDIC_OT_install_dependencies(bpy.types.Operator):

@@ -15,6 +15,7 @@ import bpy
 class BondStyle(ABC):
     """Abstract base class that bond styles should inherit from
     """
+
     @abstractmethod
     def spawn_bond_from_atoms(self,
                               atom_start: ase.Atom,
@@ -48,6 +49,7 @@ class FrustumBond(BondStyle):
         num_vertices (Real): Number of vertices used to draw each cap of the frustum.
 
     """
+
     def __init__(self, scale_factor: Real = 0.8, num_vertices: Real = 32):
         self.scale_factor = scale_factor
         self.num_vertices = num_vertices
@@ -55,7 +57,7 @@ class FrustumBond(BondStyle):
     def spawn_bond_from_atoms(self,
                               atom_start: ase.Atom,
                               atom_end: ase.Atom,
-                              offset: Tuple[Real, Real,Real] = (0,0,0)) -> bpy.types.Object:
+                              offset: Tuple[Real, Real, Real] = (0, 0, 0)) -> bpy.types.Object:
         """Draws a frustum. The class's scale_factor attribute is used as
         a multiplier with the atomic radii to generate the radii of each end
         of the frustum. End caps are filled with triangle fans.
@@ -86,8 +88,8 @@ class FrustumBond(BondStyle):
         rotation_gamma = np.arccos(dz, np.linalg.norm(deltas))
 
         bpy.ops.mesh.primitive_cone_add(vertices=self.num_vertices,
-                                        radius1 = start_radius,
-                                        radius2 = end_radius,
+                                        radius1=start_radius,
+                                        radius2=end_radius,
                                         end_fill_type="TRIFAN",
                                         location=location)
 

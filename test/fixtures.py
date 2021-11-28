@@ -54,13 +54,16 @@ def mof_nmgc():
     Ref: http://nmgc.umn.edu/software/"""
     return ase.io.read(os.path.join(fixtures_root, "NMGC-530221.cif"))
 
+
 @pytest.fixture()
 def mock_chemical(molecule_ethanol):
     yield mock.Mock(atoms=molecule_ethanol)
 
+
 @pytest.fixture()
 def mock_atom():
     yield mock.create_autospec(ase.Atom)
+
 
 @pytest.fixture()
 def mock_bond(mock_atoms):
@@ -68,6 +71,7 @@ def mock_bond(mock_atoms):
     mock.source_atom = mock_atoms
     mock.destination_atom = mock_atoms
     mock.bond_style = mock_bondstyle
+
 
 @pytest.fixture()
 def mock_bondstyle():
