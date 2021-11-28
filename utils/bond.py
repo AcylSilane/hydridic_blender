@@ -21,7 +21,7 @@ class BondBag:
     """
 
     def __init__(self, chemical: Chemical,
-                 bond_style: BondStyle = FrustumBond):
+                 bond_style: BondStyle = None):
         """
         Init for the bonds object.
 
@@ -29,7 +29,11 @@ class BondBag:
             chemical ([Chemical]): Chemical species, same as the Chemical class defined in this addon.
         """
         self._chemical: Chemical = chemical
-        self._bond_style = bond_style
+
+        if bond_style is None:
+            self._bond_style = FrustumBond()
+        else:
+            self._bond_style = bond_style
 
         self._adjacency_matrix = None
         self._bonds: List[Bond] = []
@@ -44,6 +48,9 @@ class BondBag:
 
     def __repr__(self):
         return f"BondBag with {len(self)} bonds"
+
+    def __iter__(self):
+        return iter(self.bonds)
 
     @property
     def bond_style(self) -> BondStyle:
