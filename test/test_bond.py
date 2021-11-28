@@ -7,18 +7,14 @@ import copy
 import pytest
 import mock
 
-from fixtures import molecule_ethanol, molecule_ethanol_bonds
+from fixtures import mock_chemical, mock_atom, molecule_ethanol_bonds, molecule_ethanol
+from fixtures import mock_bondstyle
 import config
 
 sys.path.append(config.project_root)
 
-from utils.bond import BondBag
+from utils.bond import BondBag, Bond
 from utils.bond_styles import BondStyle
-
-
-@pytest.fixture()
-def mock_chemical(molecule_ethanol):
-    yield mock.Mock(atoms=molecule_ethanol)
 
 
 @pytest.fixture()
@@ -38,6 +34,10 @@ def test_bondbag_calculates_adjacency(bond_bag, molecule_ethanol_bonds):
     # If subtracting the matrices from one-another leads to all 0's, they must be the same
     assert difference.nnz == 0
 
+def test_default_bondbag_style(mock_chemical, mock_bondstyle):
+    bag = BondBag(chemical=mock_chemical,
+                  bond_style=mock_bondstyle())
+    assert isinstance(bag.bond_style, mock.Mock)
 
 def test_bondbag_sets_style_of_bonds(bond_bag):
     throwaway = bond_bag.bonds
@@ -52,6 +52,12 @@ def test_bondbag_sets_style_of_bonds(bond_bag):
         assert bond.bond_style is not original_style
         assert bond.bond_style is new_style
 
-
 def test_bondbag_len(bond_bag, molecule_ethanol_bonds):
     assert len(bond_bag) == molecule_ethanol_bonds.nnz
+
+def test_bond_calls_spawn_from_atoms(mock_bondstyle):
+    bond = Bond(source_atom=mock_atom,
+                destination_atom=mock_atom,
+                bond_style=mock_bondstyle)
+    bond.draw()
+    assert mock_bondstyle.spawn_bond_from_atoms.called
