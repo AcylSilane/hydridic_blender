@@ -1,5 +1,6 @@
 blender_autocomplete
 .vscode
+.idea
 .venv
 __pycache__
 *.pyc
