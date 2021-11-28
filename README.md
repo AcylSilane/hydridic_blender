@@ -8,12 +8,17 @@
 -->
 <img alt="Python" src="https://img.shields.io/badge/python-%2314354C.svg?style=appveyor&logo=python&logoColor=white"/>  <img alt="Blender" src="https://img.shields.io/badge/blender-%23F5792A.svg?style=appveyor&logo=blender&logoColor=white"/>
 
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
+
+[![Stargazers][stars-shield]][stars-url]
+[![Forks][forks-shield]][forks-url]
+[![Contributors][contributors-shield]][contributors-url]
+[![Issues][issues-shield]][issues-url]
+
+![Test Status](https://github.com/AcylSilane/hydridic_blender/actions/workflows/python-testing.yml/badge.svg)
+
+
 
 
 
