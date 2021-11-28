@@ -29,10 +29,11 @@
   <a href="https://github.com/AcylSilane/hydridic_blender">
     <img src="assets/logo.png" alt="Logo" width="256" height="256">
   </a>
+</p>
 
-  <h3 align="center">Hydridic Blender</h3>
+<h3 align="center">Hydridic Blender</h3>
 
-  <p align="center">
+<p align="center">
     This addon helps import chemical species to blender. 
     <br />
     <a href="https://github.com/AcylSilane/hydridic_blender"><strong>Explore the docs »</strong></a>
@@ -43,7 +44,6 @@
     <a href="https://github.com/AcylSilane/hydridic_blender/issues">Report Bug</a>
     ·
     <a href="https://github.com/AcylSilane/hydridic_blender/issues">Request Feature</a>
-  </p>
 </p>
 
 
@@ -77,16 +77,23 @@
 
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
-Hydridic Blender is a Blender addon that's designed to make it easier to create illustrations of molecules and crystals. It was inspired by the wonderful [Atomic Blender](https://docs.blender.org/manual/en/latest/addons/import_export/mesh_atomic.html) addon that comes stock with most Blender installations. Hydridic Blender tries to build on this idea, to give users a higher level of control over their 3D models.
 
-The logo here are the letters "H" and "B", dressed up to resemble the half up/down arrows [commonly used to represent electrons in orbital diagrams](https://chem.libretexts.org/Courses/Mount_Royal_University/Chem_1201/Unit_2._Periodic_Properties_of_the_Elements/2.02%3A_Electron_Configurations), superimposed on an orange (for Blender :D ) [Frost Circle](https://en.wikipedia.org/wiki/Hückel_method).
+## About The Project
+
+Hydridic Blender is a Blender addon that's designed to make it easier to create illustrations of molecules and crystals.
+It was inspired by the
+wonderful [Atomic Blender](https://docs.blender.org/manual/en/latest/addons/import_export/mesh_atomic.html) addon that
+comes stock with most Blender installations. Hydridic Blender tries to build on this idea, to give users a higher level
+of control over their 3D models.
+
+The logo here are the letters "H" and "B", dressed up to resemble the half up/down
+arrows [commonly used to represent electrons in orbital diagrams](https://chem.libretexts.org/Courses/Mount_Royal_University/Chem_1201/Unit_2._Periodic_Properties_of_the_Elements/2.02%3A_Electron_Configurations)
+, superimposed on an orange (for Blender :D ) [Frost Circle](https://en.wikipedia.org/wiki/Hückel_method).
 
 ### Built With
 
 * [The Atomic Simulation Environment](https://wiki.fysik.dtu.dk/ase/)
 * [Blender's Python API](https://docs.blender.org/api/current/index.html#)
-
 
 <!-- GETTING STARTED -->
 <!-- ## Getting Started
@@ -104,23 +111,30 @@ TODO: Add installation instructions -->
 
 
 <!-- USAGE EXAMPLES -->
+
 ## Usage
 
-Currently, the addon supports the import of any chemical format supported by the Atomic Simulation Environment (XYZ, VASP, PDB, etc.) of both periodic and non-periodic varieties. Bonds are not currently calculated drawn, but this is something currently being worked on.
+Currently, the addon supports the import of any chemical format supported by the Atomic Simulation Environment (XYZ,
+VASP, PDB, etc.) of both periodic and non-periodic varieties. Bonds are not currently calculated drawn, but this is
+something currently being worked on.
 
 
 
 <!-- ROADMAP -->
+
 ## Roadmap
 
-See the [open issues](https://github.com/AcylSilane/hydridic_blender/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/AcylSilane/hydridic_blender/issues) for a list of proposed features (and known
+issues).
 
 
 
 <!-- CONTRIBUTING -->
+
 ## Contributing
 
-This is currently a 1-person project, being done in the author's spare time. That being said, any contributions are welcome! If you'd like to help out, please do the following:
+This is currently a 1-person project, being done in the author's spare time. That being said, any contributions are
+welcome! If you'd like to help out, please do the following:
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
@@ -129,8 +143,8 @@ This is currently a 1-person project, being done in the author's spare time. Tha
 5. Open a Pull Request
 6. Keep on Being Awesome!
 
-
 <!-- LICENSE -->
+
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
@@ -138,6 +152,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 
 <!-- CONTACT -->
+
 ## Contact
 
 James Dean - message me via GitHub
@@ -147,24 +162,39 @@ Project Link: [https://github.com/AcylSilane/hydridic_blender](https://github.co
 
 
 <!-- ACKNOWLEDGEMENTS -->
+
 ## Acknowledgements
 
 * [The Best README Template](https://github.com/othneildrew/Best-README-Template)
-* The [Blender Development](https://marketplace.visualstudio.com/items?itemName=JacquesLucke.blender-development) VSCode extension by Jacques Lucke
-* This [excellent blog post](https://b3d.interplanety.org/en/using-microsoft-visual-studio-code-as-external-ide-for-writing-blender-scripts-add-ons/) by Nikita, which greatly helped in getting autocomplete/linting working for Blender's Python API
-
+* The [Blender Development](https://marketplace.visualstudio.com/items?itemName=JacquesLucke.blender-development) VSCode
+  extension by Jacques Lucke
+*
+This [excellent blog post](https://b3d.interplanety.org/en/using-microsoft-visual-studio-code-as-external-ide-for-writing-blender-scripts-add-ons/)
+by Nikita, which greatly helped in getting autocomplete/linting working for Blender's Python API
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
 [contributors-shield]: https://img.shields.io/github/contributors/AcylSilane/hydridic_blender.svg?style=appveyor
+
 [contributors-url]: https://github.com/AcylSilane/hydridic_blender/graphs/contributors
+
 [forks-shield]: https://img.shields.io/github/forks/AcylSilane/hydridic_blender.svg?style=appveyor
+
 [forks-url]: https://github.com/AcylSilane/hydridic_blender/network/members
+
 [stars-shield]: https://img.shields.io/github/stars/AcylSilane/hydridic_blender.svg?style=appveyor
+
 [stars-url]: https://github.com/AcylSilane/hydridic_blender/stargazers
+
 [issues-shield]: https://img.shields.io/github/issues/AcylSilane/hydridic_blender.svg?style=appveyor
+
 [issues-url]: https://github.com/AcylSilane/hydridic_blender/issues
+
 [license-shield]: https://img.shields.io/github/license/AcylSilane/hydridic_blender.svg?style=appveyor
+
 [license-url]: https://github.com/AcylSilane/hydridic_blender/blob/master/LICENSE.txt
+
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=appveyor&logo=linkedin&colorB=555
+
 [linkedin-url]: https://linkedin.com/in/DeanJamesR
