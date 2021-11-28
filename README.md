@@ -16,7 +16,8 @@
 [![Contributors][contributors-shield]][contributors-url]
 [![Issues][issues-shield]][issues-url]
 
-![Test Status](https://github.com/AcylSilane/hydridic_blender/actions/workflows/python-testing.yml/badge.svg)
+![Master Tests](https://github.com/AcylSilane/hydridic_blender/actions/workflows/test_lint_master.yml/badge.svg?branch=master)
+![Dev Tests](https://github.com/AcylSilane/hydridic_blender/actions/workflows/test_lint_dev.yml/badge.svg?branch=dev)
 
 
 
