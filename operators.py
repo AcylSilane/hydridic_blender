@@ -9,7 +9,7 @@ import importlib
 import bpy
 import bpy_extras
 
-import utils
+import utils.chemical
 
 DEPENDENCIES = ("ase",)
 
