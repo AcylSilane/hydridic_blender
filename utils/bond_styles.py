@@ -11,6 +11,7 @@ import ase.data
 
 import bpy
 import mathutils
+from utils import PACKAGE_PREFIX
 
 
 class BondStyle(ABC):
@@ -99,6 +100,10 @@ class FrustumBond(BondStyle):
 
         # Rename object
         bpy.context.object.name = f"bond_{atom_start.symbol}-{atom_end.symbol}_frustum"
+
+        # Set material
+        glass_shader = generic_glass()
+        bpy.context.object.active_material = glass_shader
         return bpy.context.object
 
     @staticmethod
@@ -107,3 +112,39 @@ class FrustumBond(BondStyle):
         quaternion = direction.to_track_quat("Z", "Y")
 
         return quaternion
+
+
+GLASS_BSDF_INPUTS = {
+    "Color": 0,
+    "Roughness": 1,
+    "IOR": 2,
+    "Normal": 3,
+}
+
+
+def generic_glass():
+    material_name = f"{PACKAGE_PREFIX}_generic_glass"
+    material = bpy.data.materials.get(material_name)
+    if material is None:
+        # Create the material
+        material = bpy.data.materials.new(material_name)
+        material.use_nodes = True
+
+        # Find the nodes currently in there
+        nodes = material.node_tree.nodes
+        bsdf = nodes.get("Principled BSDF")
+        output = nodes.get("Material Output")
+
+        # Replace the BSDF node with a glass shader
+        nodes.remove(bsdf)
+        glass = nodes.new("ShaderNodeBsdfGlass")
+        material.node_tree.links.new(output.inputs["Surface"], glass.outputs["BSDF"])
+
+        # Set attributes of glass shader
+        glass.inputs[GLASS_BSDF_INPUTS["Color"]].default_value = (0.90126,
+                                                                  1.00,
+                                                                  0.895707,
+                                                                  1.0)  # Very slightly green color
+        glass.inputs[GLASS_BSDF_INPUTS["Roughness"]].default_value = 0.250
+        glass.inputs[GLASS_BSDF_INPUTS["IOR"]].default_value = 1.450
+    return material
