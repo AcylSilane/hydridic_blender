@@ -116,7 +116,8 @@ class Bond:
         self.destination_atom = destination_atom
         self.bond_style = bond_style
 
-    def draw(self) -> Bond:
+    def draw(self, offset=(0, 0, 0)) -> Bond:
         self.bond_style.spawn_bond_from_atoms(atom_start=self.source_atom,
-                                              atom_end=self.destination_atom)
+                                              atom_end=self.destination_atom,
+                                              offset=offset)
         return self

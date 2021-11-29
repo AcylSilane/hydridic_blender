@@ -10,6 +10,7 @@ import numpy as np
 import ase.data
 
 import bpy
+import mathutils
 
 
 class BondStyle(ABC):
@@ -50,7 +51,7 @@ class FrustumBond(BondStyle):
 
     """
 
-    def __init__(self, scale_factor: Real = 0.8, num_vertices: Real = 32):
+    def __init__(self, scale_factor: Real = 0.25, num_vertices: int = 32):
         self.scale_factor = scale_factor
         self.num_vertices = num_vertices
 
@@ -71,31 +72,38 @@ class FrustumBond(BondStyle):
         Returns:
             BondStyle: A reference to the class that was called.
         """
+        depth = np.abs(np.linalg.norm(atom_start.position - atom_end.position))
+
         # The origin of the spawned conic is at the midpoint of the two caps
-        start_location = atom_start.position
-        end_location = atom_end.position
-        location = ((start_location + end_location) / 2) + offset
+        location = ((atom_start.position + atom_end.position) / 2) + offset
 
         # Bond scales
         start_radius = ase.data.covalent_radii[atom_start.number] * self.scale_factor
-        end_radius = ase.data.covalent_radii[atom_start.number] * self.scale_factor
+        end_radius = ase.data.covalent_radii[atom_end.number] * self.scale_factor
 
-        # Figure out euler rotation
-        deltas = start_location - end_location
-        dx, dy, dz = deltas
-        rotation_alpha = 0
-        rotation_beta = np.arctan2(dx, dy)
-        rotation_gamma = np.arccos(dz, np.linalg.norm(deltas))
-
+        quaternion = self.calculate_track_quaternion(atom_start.position, atom_end.position)
         bpy.ops.mesh.primitive_cone_add(vertices=self.num_vertices,
                                         radius1=start_radius,
                                         radius2=end_radius,
+                                        depth=depth,
                                         end_fill_type="TRIFAN",
                                         location=location)
 
-        # TODO: See if this rotation can just be supplied directly to the primitve cone function
-        bpy.context.object.rotation_euler[0] = rotation_alpha
-        bpy.context.object.rotation_euler[1] = rotation_beta
-        bpy.context.object.rotation_euler[2] = rotation_gamma
+        # Fix rotation
+        bpy.context.object.rotation_mode = "QUATERNION"
+        bpy.context.object.rotation_quaternion = quaternion
 
+        # Shade smooth
+        for poly in bpy.context.object.data.polygons:
+            poly.use_smooth = True
+
+        # Rename object
+        bpy.context.object.name = f"bond_{atom_start.symbol}-{atom_end.symbol}_frustum"
         return bpy.context.object
+
+    @staticmethod
+    def calculate_track_quaternion(start_position, end_position):
+        direction = mathutils.Vector(end_position - start_position)
+        quaternion = direction.to_track_quat("Z", "Y")
+
+        return quaternion

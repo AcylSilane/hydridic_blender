@@ -181,7 +181,5 @@ class Chemical:
         """
         offset = self.__context.scene.cursor.location
         for bond in self.__bonds:
-            atom_start = self.atoms[bond[0]]
-            atom_end = self.atoms[bond[1]]
-            bond.spawn_bond_from_atoms(atom_start, atom_end, offset)
+            bond.draw(offset)
         return self
