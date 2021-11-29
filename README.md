@@ -118,6 +118,9 @@ Currently, the addon supports the import of any chemical format supported by the
 VASP, PDB, etc.) of both periodic and non-periodic varieties. Bonds are not currently calculated drawn, but this is
 something currently being worked on.
 
+Example structure, nicotine:
+
+![image](https://user-images.githubusercontent.com/24254612/143817018-f18537ab-3b0e-4451-82f6-cd4a3b15b25a.png)
 
 
 <!-- ROADMAP -->
