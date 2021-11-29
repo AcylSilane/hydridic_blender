@@ -115,8 +115,8 @@ TODO: Add installation instructions -->
 ## Usage
 
 Currently, the addon supports the import of any chemical format supported by the Atomic Simulation Environment (XYZ,
-VASP, PDB, etc.) of both periodic and non-periodic varieties. Bonds are not currently calculated drawn, but this is
-something currently being worked on.
+VASP, PDB, etc.) of both periodic and non-periodic varieties. Materials are automatically generated, and bonding is
+automatically calculated via ASE.
 
 Example structure, nicotine:
 
