@@ -11,6 +11,9 @@ import ase.io
 
 from utils.bond import BondBag
 
+from utils.material_factory import MaterialFactory
+material_factory = MaterialFactory(materials_are_singleton=True)
+
 
 class Chemical:
     """
@@ -31,6 +34,7 @@ class Chemical:
         self.__context = context
         self.name = self.atoms.get_chemical_formula()
         self.creation_timestamp = time.time()
+        self.radius_scale = 0.8
 
         # Create a new working directory for the molecule
         self.collection_name = f"Chemical Structure: {self.name}"
@@ -165,11 +169,15 @@ class Chemical:
         covalent_radius = ase.data.covalent_radii[atomic_number]
 
         # Spawn the atom, set its name, and hide it from renders
-        bpy.ops.surface.primitive_nurbs_surface_sphere_add(radius=covalent_radius,
+        bpy.ops.surface.primitive_nurbs_surface_sphere_add(radius=covalent_radius * self.radius_scale,
                                                            location=self.__context.scene.cursor.location)
         bpy.context.active_object.name = f"instance_{atom_type}"
         bpy.context.active_object.hide_render = True
         bpy.context.active_object.hide_set(True)
+
+        # Give the atom a material
+        material = material_factory.get_material(atom_type, self.name)
+        bpy.context.active_object.active_material = material
 
         # Store a reference to the object we created
         current_object = bpy.context.active_object
