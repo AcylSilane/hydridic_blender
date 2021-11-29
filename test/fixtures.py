@@ -3,8 +3,10 @@ Re-usable text fixtures
 """
 import os
 
+import mock
 import pytest
 import ase.io
+import ase.neighborlist
 
 from config import fixtures_root
 
@@ -35,8 +37,42 @@ def molecule_ethanol():
 
 
 @pytest.fixture()
+def molecule_ethanol_bonds(molecule_ethanol):
+    neighborlist = ase.neighborlist.NeighborList(
+        cutoffs=ase.neighborlist.natural_cutoffs(molecule_ethanol),
+        self_interaction=False,
+        primitive=ase.neighborlist.NewPrimitiveNeighborList
+    )
+    neighborlist.update(molecule_ethanol)
+    return neighborlist.get_connectivity_matrix(sparse=True)
+
+
+@pytest.fixture()
 def mof_nmgc():
     """This fixture is a MOF obtained from the NMGC database.
     Useful for testing periodic systems with both organic and inorganic components.
     Ref: http://nmgc.umn.edu/software/"""
     return ase.io.read(os.path.join(fixtures_root, "NMGC-530221.cif"))
+
+
+@pytest.fixture()
+def mock_chemical(molecule_ethanol):
+    yield mock.Mock(atoms=molecule_ethanol)
+
+
+@pytest.fixture()
+def mock_atom():
+    yield mock.create_autospec(ase.Atom)
+
+
+@pytest.fixture()
+def mock_bond(mock_atoms):
+    mock_bond = mock.Mock()
+    mock.source_atom = mock_atoms
+    mock.destination_atom = mock_atoms
+    mock.bond_style = mock_bondstyle
+
+
+@pytest.fixture()
+def mock_bondstyle():
+    yield mock.Mock()

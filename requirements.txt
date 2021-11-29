@@ -1,5 +1,5 @@
-ase
-numpy
+ase~=3.22.0
+numpy~=1.21.4
 
 # VSCode environment
 debugpy
@@ -9,6 +9,8 @@ flask
 fake-bpy-module-2.93
 
 # Needed for Testing
-pytest
-mock
+pytest~=6.2.5
+mock~=4.0.3
 pytest-mock
+
+scipy~=1.7.3

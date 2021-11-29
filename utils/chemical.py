@@ -16,6 +16,7 @@ class Chemical:
     """
     A chemical species, such as a small molecule, a polymer, a crystal, a protein, etc.
     """
+
     def __init__(self, atoms: ase.Atoms, context: bpy.context):
         """
         Init for the chemical object.
@@ -180,8 +181,5 @@ class Chemical:
         """
         offset = self.__context.scene.cursor.location
         for bond in self.__bonds:
-            atom_start = self.atoms[bond[0]]
-            atom_end = self.atoms[bond[1]]
-            bond.spawn_bond_from_atoms(atom_start, atom_end, offset)
+            bond.draw(offset)
         return self
-    

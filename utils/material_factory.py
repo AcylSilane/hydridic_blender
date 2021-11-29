@@ -8,6 +8,7 @@ import bpy
 
 class MaterialFactory:
     """Factory controlling access to Blender materials (i.e. shaders)."""
+
     def __init__(self, materials_are_singleton=True):
         self.materials_are_singleton = materials_are_singleton
 
@@ -40,4 +41,3 @@ class MaterialFactory:
     # =======
     # Private
     # =======
-    

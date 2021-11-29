@@ -21,7 +21,7 @@ class BondBag:
     """
 
     def __init__(self, chemical: Chemical,
-                 bond_style: BondStyle = FrustumBond):
+                 bond_style: BondStyle = None):
         """
         Init for the bonds object.
 
@@ -29,7 +29,11 @@ class BondBag:
             chemical ([Chemical]): Chemical species, same as the Chemical class defined in this addon.
         """
         self._chemical: Chemical = chemical
-        self._bond_style = bond_style
+
+        if bond_style is None:
+            self._bond_style = FrustumBond()
+        else:
+            self._bond_style = bond_style
 
         self._adjacency_matrix = None
         self._bonds: List[Bond] = []
@@ -40,10 +44,13 @@ class BondBag:
                                                           primitive=ase.neighborlist.NewPrimitiveNeighborList)
 
     def __len__(self) -> int:
-        return len(self._bonds)
+        return len(self.bonds)
 
     def __repr__(self):
         return f"BondBag with {len(self)} bonds"
+
+    def __iter__(self):
+        return iter(self.bonds)
 
     @property
     def bond_style(self) -> BondStyle:
@@ -109,7 +116,8 @@ class Bond:
         self.destination_atom = destination_atom
         self.bond_style = bond_style
 
-    def draw(self) -> Bond:
+    def draw(self, offset=(0, 0, 0)) -> Bond:
         self.bond_style.spawn_bond_from_atoms(atom_start=self.source_atom,
-                                              atom_end=self.destination_atom)
+                                              atom_end=self.destination_atom,
+                                              offset=offset)
         return self
